@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PowerFit Gym</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+:root {
+  --primary:#ff3d00;
+  --dark:#0f0f0f;
+  --light:#f5f5f5;
+}
+* {
+  margin:0; padding:0; box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+body { background:var(--dark); color:white; }
+
+/* NAVBAR */
+nav {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 40px;
+  background:#000;
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+nav h1 { color:var(--primary); }
+nav a {
+  color:white;
+  margin-left:20px;
+  text-decoration:none;
+}
+nav a:hover { color:var(--primary); }
+
+/* HERO */
+.hero {
+  height:90vh;
+  background:url('https://images.unsplash.com/photo-1558611848-73f7eb4001a1') center/cover;
+  display:flex;
+  align-items:center;
+  padding:40px;
+}
+.hero div {
+  max-width:500px;
+}
+.hero h2 {
+  font-size:3rem;
+}
+.hero button {
+  padding:12px 25px;
+  margin-top:15px;
+  background:var(--primary);
+  border:none;
+  color:white;
+  cursor:pointer;
+  font-size:1rem;
+}
+
+/* SECTIONS */
+section {
+  padding:70px 40px;
+}
+section h2 {
+  margin-bottom:30px;
+  text-align:center;
+}
+
+/* MEMBERSHIP */
+.pricing {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+.card {
+  background:#111;
+  padding:25px;
+  border-radius:10px;
+  text-align:center;
+}
+.card h3 { color:var(--primary); }
+.card button {
+  margin-top:15px;
+  padding:10px;
+  width:100%;
+  background:var(--primary);
+  border:none;
+  color:white;
+}
+
+/* CLASSES */
+select {
+  padding:10px;
+  margin-bottom:15px;
+}
+table {
+  width:100%;
+  border-collapse:collapse;
+}
+td,th {
+  border:1px solid #333;
+  padding:10px;
+  text-align:center;
+}
+
+/* TRAINERS */
+.trainers {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:20px;
+}
+.trainer {
+  background:#111;
+  padding:20px;
+  text-align:center;
+  border-radius:10px;
+}
+.trainer img {
+  width:100%;
+  border-radius:10px;
+}
+
+/* DASHBOARD */
+.dashboard {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+/* CONTACT */
+input, textarea {
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+}
+iframe {
+  width:100%;
+  height:300px;
+  border:0;
+}
+
+/* FOOTER */
+footer {
+  text-align:center;
+  padding:20px;
+  background:#000;
+  margin-top:50px;
+}
+.modal{
+  display:none;
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.8);
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+.modal-content{
+  background:#111;
+  padding:25px;
+  width:90%;
+  max-width:400px;
+  border-radius:10px;
+}
+.close{
+  float:right;
+  cursor:pointer;
+  font-size:20px;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <h1>PowerFit</h1>
+  <div>
+    <a href="#home">Home</a>
+    <a href="#plans">Plans</a>
+    <a href="#classes">Classes</a>
+    <a href="#trainers">Trainers</a>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div>
+    <h2>Get Stronger. Feel Better.</h2>
+    <p>Transform your body with expert trainers and modern workouts.</p>
+   <button onclick="window.location.href='join.html'">Join Now</button>
+
+<button style="background:#fff;color:#000;"
+        onclick="window.location.href='demo.html'">
+  Free Trial
+</button>
+
+  </div>
+</section>
+
+<!-- MEMBERSHIP -->
+<section id="plans">
+<h2>Membership Plans</h2>
+<div class="pricing">
+  <div class="card">
+    <h3>Monthly</h3>
+    <p>$29 / month</p>
+    <p>✔ All Classes<br>✔ Gym Access</p>
+<button onclick="openSignup()">Sign Up</button>
+
+
+
+  </div>
+  <div class="card">
+    <h3>Yearly</h3>
+    <p>$299 / year</p>
+    <p>✔ Save 20%<br>✔ Trainer Support</p>
+<button onclick="openSignup()">Sign Up</button>
+
+
+
+  </div>
+  <div class="card">
+    <h3>Student</h3>
+    <p>$19 / month</p>
+    <p>✔ Limited Hours</p>
+<button onclick="openSignup()">Sign Up</button>
+
+
+  </div>
+</div>
+</section>
+
+<!-- CLASSES -->
+<section id="classes">
+<h2>Class Schedule</h2>
+<select id="filter">
+  <option>All</option>
+  <option>Yoga</option>
+  <option>HIIT</option>
+  <option>Strength</option>
+</select>
+<table>
+<tr><th>Class</th><th>Day</th><th>Time</th></tr>
+<tr><td>Yoga</td><td>Mon</td><td>6 AM</td></tr>
+<tr><td>HIIT</td><td>Wed</td><td>7 PM</td></tr>
+<tr><td>Strength</td><td>Fri</td><td>5 PM</td></tr>
+</table>
+</section>
+
+<!-- TRAINERS -->
+<section id="trainers">
+<h2>Our Trainers</h2>
+<div class="trainers">
+  <div class="trainer">
+    <img src="https://guradeshmann.com/wp-content/uploads/2021/05/1-1-Coaching.jpg">
+    <h3>Alex</h3>
+    <p>Certified Strength Coach</p>
+  </div>
+  <div class="trainer">
+    <img src="https://images.unsplash.com/photo-1605296867304-46d5465a13f1">
+    <h3>Sara</h3>
+    <p>Yoga & Mobility Expert</p>
+  </div>
+</div>
+</section>
+
+<!-- DASHBOARD -->
+<section id="dashboard">
+<h2>Member Dashboard</h2>
+<div class="dashboard">
+  <div class="card">
+    <h3>Membership Status</h3>
+    <p>Active ✔</p>
+  <button onclick="openRenew()">Renew Plan</button>
+
+  </div>
+  <div class="card">
+    <h3>Progress Tracking</h3>
+    <canvas id="progress"></canvas>
+  </div>
+</div>
+</section>
+
+
+
+
+<!-- CONTACT -->
+<section id="contact">
+<h2>Contact & Location</h2>
+<input placeholder="Your Name">
+<input placeholder="Email">
+<textarea placeholder="Message"></textarea>
+<button onclick="msg()">Send</button>
+
+<iframe src="https://maps.google.com/maps?q=New%20York&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+</section>
+
+<footer>
+<p>📞 +1 234 567 890 | ✉ powerfit@gym.com</p>
+<p>© 2025 PowerFit Gym</p>
+</footer>
+
+
+<script>
+  function msg(){
+    alert("we'll contact you soon");
+  }
+const ctx = document.getElementById('progress');
+
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+    datasets: [{
+      label: 'Weight Progress',
+      data: [80, 78, 76, 74],
+      borderColor: '#ff3d00',
+      fill: false
+    }]
+  }
+});
+</script>
+
+<!-- SIGN UP MODAL -->
+<div id="signupModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeSignup()">✖</span>
+    <h3>Sign Up</h3>
+
+    <input type="text" id="name" placeholder="Full Name">
+    <input type="email" id="email" placeholder="Email">
+    <input type="tel" id="phone" placeholder="Phone">
+
+    <select id="plan">
+      <option value="">Select Plan</option>
+      <option>Monthly</option>
+      <option>Yearly</option>
+      <option>Student</option>
+    </select>
+
+    <button onclick="submitSignup()" style="width:100%">Submit</button>
+  </div>
+</div>
+
+
+<!-- RENEW MODAL -->
+<div id="renewModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeRenew()">✖</span>
+    <h3>Renew Membership</h3>
+
+    <input type="text" id="memberId" placeholder="Member ID">
+    
+    <select id="renewPlan">
+      <option value="">Select Renewal Plan</option>
+      <option>1 Month</option>
+      <option>6 Months</option>
+      <option>1 Year</option>
+    </select>
+
+    <button onclick="submitRenew()" style="width:100%">Submit</button>
+  </div>
+</div>
+
+
+<script>
+function openSignup(){
+  document.getElementById("signupModal").style.display = "flex";
+}
+function closeSignup(){
+  document.getElementById("signupModal").style.display = "none";
+}
+
+function openRenew(){
+  document.getElementById("renewModal").style.display = "flex";
+}
+function closeRenew(){
+  document.getElementById("renewModal").style.display = "none";
+}
+</script>
+<script>
+function submitSignup(){
+  let name = document.getElementById("name").value;
+  let email = document.getElementById("email").value;
+  let phone = document.getElementById("phone").value;
+  let plan = document.getElementById("plan").value;
+
+  if(name=="" || email=="" || phone=="" || plan==""){
+    alert("Please fill all fields");
+    return;
+  }
+
+  alert("Signup Successful!\nWelcome " + name);
+
+  // close modal after submit
+  closeSignup();
+
+  // clear form
+  document.getElementById("name").value="";
+  document.getElementById("email").value="";
+  document.getElementById("phone").value="";
+  document.getElementById("plan").value="";
+}
+</script>
+<script>
+function submitRenew(){
+  let memberId = document.getElementById("memberId").value;
+  let renewPlan = document.getElementById("renewPlan").value;
+
+  if(memberId=="" || renewPlan==""){
+    alert("Please fill all fields");
+    return;
+  }
+
+  alert(
+    "Renewal Request Submitted!\n" +
+    "Member ID: " + memberId + "\n" +
+    "Plan: " + renewPlan
+  );
+
+  // close modal
+  closeRenew();
+
+  // clear fields
+  document.getElementById("memberId").value = "";
+  document.getElementById("renewPlan").value = "";
+}
+</script>
+
+</body>
+</html>
